@@ -1,0 +1,14 @@
+---
+title: "King County House Sales"
+author: "Ashley O'Mahony | [ashleyomahony.com](http://ashleyomahony.com) | May 2019"
+always_allow_html: yes
+output:
+  html_document:
+    theme: yeti
+  github_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
