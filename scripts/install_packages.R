@@ -7,7 +7,10 @@ packages_list <- c('dplyr',
                    'tidyr',
                    'ggmap',
                    'ggplot2',
+                   'GGally',
+                   'grid',
                    'gridExtra',
+                   'shiny',
                    'caret')
 
 for (i in packages_list) {
