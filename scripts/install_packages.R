@@ -5,6 +5,7 @@
 packages_list <- c('dplyr',
                    'corrplot',
                    'tidyr',
+                   'ggmap',
                    'ggplot2',
                    'gridExtra',
                    'caret')
@@ -20,9 +21,10 @@ for (i in packages_list) {
   }
 }
 
-print(paste0(
-  '[',
-  round(difftime(Sys.time(), start_time, units = 'secs'), 1),
-  's]: ',
-  'All necessary packages installed and loaded'
-))
+# print(paste0(
+#   '[',
+#   round(difftime(Sys.time(), start_time, units = 'secs'), 1),
+#   's]: ',
+#   'All necessary packages installed and loaded'
+# ))
+
