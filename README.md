@@ -13,4 +13,4 @@ All the files of this project are saved in a [GitHub repository](https://github.
 
 #### Google Map API  
 
-The project collects static map tiles from the Google *Maps Static API*. It uses an API key stored in the file `google.api` store in the root directory. You should visit the Google API Console to generate your own API key and save it in the file `google.api` to be able to generate your own maps.  
+The project collects static map tiles from the Google *Maps Static API*. It uses an API key stored in the file `google.api` store in the root directory. You should visit the [Google API Console](https://console.developers.google.com/apis) to generate your own API key and save it in the file `google.api` to be able to generate your own maps.  

@@ -78,7 +78,58 @@ These packages are installed and loaded if necessary by the main script.
 
 ## Data Preparation  
 
+The dataset is pretty clean, with no missing value in both Train and Test sets. A quick look at the `id` values also shows that only a few houses have been sold more than once on the period, so it doesn't seem relevant the consider the `id` and the `date` for this analysis. We will thus focus on the house features only to predict its price.  
 
+``` {r NAs and id, echo = FALSE}
+
+# Check if contains NAs ----
+na_count <-
+  sapply(hp_train, function(y)
+    sum(length(which(is.na(
+      y
+    )))))
+na_count <- data.frame(na_count)
+na_count$perc <- round(na_count$na_count / nrow(hp_train) * 100, 2)
+print(paste0(nrow(na_count[na_count$na_count != 0, ]), ' columns of the Train Set have NAs.'))
+
+na_count <-
+  sapply(hp_test, function(y)
+    sum(length(which(is.na(
+      y
+    )))))
+na_count <- data.frame(na_count)
+na_count$perc <- round(na_count$na_count / nrow(hp_test) * 100, 2)
+print(paste0(nrow(na_count[na_count$na_count != 0, ]), ' columns of the Test Set have NAs.'))
+
+
+# Check if house IDs are relevant ----
+print(
+  paste0(
+    length(names(table(hp_train$id)[table(hp_train$id) > 1])),
+    ' houses sold more than once on the period, for a total of ',
+    length(unique(hp_train$id)),
+    ' houses in the Train Set (',
+    round(length(names(
+      table(hp_train$id)[table(hp_train$id) > 1]
+    )) / length(unique(hp_train$id)), 3),
+    '%).'
+  )
+)
+
+print(
+  paste0(
+    length(names(table(hp_test$id)[table(hp_test$id) > 1])),
+    ' houses in the Test Set sold more than once on the period, for a total of ',
+    length(unique(hp_test$id)),
+    ' houses in the Test Set (',
+    round(length(names(table(
+      hp_test$id
+    )[table(hp_test$id) > 1])) / length(unique(hp_test$id)), 3),
+    '%).'
+  )
+)
+
+```
 
 
 
