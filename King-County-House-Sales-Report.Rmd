@@ -105,26 +105,22 @@ print(paste0(nrow(na_count[na_count$na_count != 0, ]), ' columns of the Test Set
 # Check if house IDs are relevant ----
 print(
   paste0(
-    length(names(table(hp_train$id)[table(hp_train$id) > 1])),
+    houses_sold_multi_times_train,
     ' houses sold more than once on the period, for a total of ',
-    length(unique(hp_train$id)),
+    houses_train,
     ' houses in the Train Set (',
-    round(length(names(
-      table(hp_train$id)[table(hp_train$id) > 1]
-    )) / length(unique(hp_train$id)), 3),
+    round(houses_sold_multi_times_train / houses_train, 3),
     '%).'
   )
 )
 
 print(
   paste0(
-    length(names(table(hp_test$id)[table(hp_test$id) > 1])),
+    houses_sold_multi_times_test,
     ' houses in the Test Set sold more than once on the period, for a total of ',
-    length(unique(hp_test$id)),
+    houses_test,
     ' houses in the Test Set (',
-    round(length(names(table(
-      hp_test$id
-    )[table(hp_test$id) > 1])) / length(unique(hp_test$id)), 3),
+    round(houses_sold_multi_times_test / houses_test, 3),
     '%).'
   )
 )

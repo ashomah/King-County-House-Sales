@@ -9,10 +9,10 @@ hp_train <-
            sep = ',',
            stringsAsFactors = FALSE)
 
-# print(paste0('[', round(
-#   difftime(Sys.time(), start_time, units = 'secs'), 1
-# ), 's]: ',
-# 'Train Set imported'))
+print(paste0('[', round(
+  difftime(Sys.time(), start_time, units = 'secs'), 1
+), 's]: ',
+'Train Set imported'))
 
 
 # Loading Test Set ----
@@ -21,10 +21,10 @@ hp_test <-
            sep = ',',
            stringsAsFactors = FALSE)
 
-# print(paste0('[', round(
-#   difftime(Sys.time(), start_time, units = 'secs'), 1
-# ), 's]: ',
-# 'Test Set imported'))
+print(paste0('[', round(
+  difftime(Sys.time(), start_time, units = 'secs'), 1
+), 's]: ',
+'Test Set imported'))
 
 
 # Check if contains NAs ----
@@ -35,7 +35,7 @@ na_count <-
     )))))
 na_count <- data.frame(na_count)
 na_count$perc <- round(na_count$na_count / nrow(hp_train) * 100, 2)
-print(paste0(nrow(na_count[na_count$na_count != 0, ]), ' columns of the Train Set have NAs.'))
+print(paste0(nrow(na_count[na_count$na_count != 0,]), ' columns of the Train Set have NAs.'))
 
 na_count <-
   sapply(hp_test, function(y)
@@ -44,32 +44,34 @@ na_count <-
     )))))
 na_count <- data.frame(na_count)
 na_count$perc <- round(na_count$na_count / nrow(hp_test) * 100, 2)
-print(paste0(nrow(na_count[na_count$na_count != 0, ]), ' columns of the Test Set have NAs.'))
+print(paste0(nrow(na_count[na_count$na_count != 0,]), ' columns of the Test Set have NAs.'))
 
 
 # Check if house IDs are relevant ----
+houses_sold_multi_times_train <-
+  length(names(table(hp_train$id)[table(hp_train$id) > 1]))
+houses_train <- length(unique(hp_train$id))
 print(
   paste0(
-    length(names(table(hp_train$id)[table(hp_train$id) > 1])),
+    houses_sold_multi_times_train,
     ' houses sold more than once on the period, for a total of ',
-    length(unique(hp_train$id)),
+    houses_train,
     ' houses in the Train Set (',
-    round(length(names(
-      table(hp_train$id)[table(hp_train$id) > 1]
-    )) / length(unique(hp_train$id)), 3),
+    round(houses_sold_multi_times_train / houses_train, 3),
     '%).'
   )
 )
 
+houses_sold_multi_times_test <-
+  length(names(table(hp_test$id)[table(hp_test$id) > 1]))
+houses_test <- length(unique(hp_test$id))
 print(
   paste0(
-    length(names(table(hp_test$id)[table(hp_test$id) > 1])),
+    houses_sold_multi_times_test,
     ' houses in the Test Set sold more than once on the period, for a total of ',
-    length(unique(hp_test$id)),
+    houses_test,
     ' houses in the Test Set (',
-    round(length(names(table(
-      hp_test$id
-    )[table(hp_test$id) > 1])) / length(unique(hp_test$id)), 3),
+    round(houses_sold_multi_times_test / houses_test, 3),
     '%).'
   )
 )
@@ -93,16 +95,19 @@ hp_test$condition <- as.factor(hp_test$condition)
 hp_test$grade <- as.factor(hp_test$grade)
 
 
-
 # Save RData for RMarkdown ----
 save(list = c('hp_train',
               'hp_test',
-              'long_lat'),
+              'long_lat',
+              'houses_sold_multi_times_train',
+              'houses_train',
+              'houses_sold_multi_times_test',
+              'houses_test'),
      file = 'data_output/RMarkdown_Objects.RData')
 
 
 # Read and Transform Dataset Done ----
-# print(paste0('[', round(
-#   difftime(Sys.time(), start_time, units = 'secs'), 1
-# ), 's]: ',
-# 'Working dataset ready!'))
+print(paste0('[', round(
+  difftime(Sys.time(), start_time, units = 'secs'), 1
+), 's]: ',
+'Working dataset ready!'))
