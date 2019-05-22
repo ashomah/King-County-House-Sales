@@ -11,6 +11,16 @@ All the files of this project are saved in a [GitHub repository](https://github.
 
 </br>
 
+#### Report Formats  
+
+The report of this analysis comes in three formats:  
+
+* **GitHub Markdown**: to be easily read on the [GitHub repository](https://github.com/ashomah/King-County-House-Sales).  
+* **HTML**: to be consulted in a web browser and/or printed.  
+* **Shiny App**: to add interactivity and provide enhanced readability.  
+
+</br>
+
 #### Google Map API  
 
 The project collects static map tiles from the Google *Maps Static API*. It uses an API key stored in the file `google.api` store in the root directory. You should visit the [Google API Console](https://console.developers.google.com/apis) to generate your own API key and save it in the file `google.api` to be able to generate your own maps.  

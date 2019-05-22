@@ -8,6 +8,7 @@ output:
   github_document: default
 params: 
   shiny: TRUE
+runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
@@ -130,6 +131,16 @@ print(
 
 ```
 
+Some of the features can be converted into factors, as they are not continuous and help categorizing the house:  
+
+* `waterfront` is a boolean, indicating if the house has a view to a waterfront.  
+* `view` indicated the number of times the house has been viewed. As it only has 4 values, this feature can be factorized.  
+* `condition` is a score from 1 to 5, indicating the state of the house.  
+* `grade` is another score, with 11 levels.  
+* `bedrooms` is typically used to categorize houses.  
+* `bathrooms` could also be used to categorize the houses, although it is not clear why the data shows decimal numbers.  
+* `zipcode` is a cluster-like category of the house location.  
+
 </br>
 
 ***
@@ -140,111 +151,163 @@ print(
 
 ``` {r Factor Features, echo=FALSE, message = FALSE, fig.align = 'center'}
 
-# if (params$shiny == TRUE) {
-#   ui <- fluidPage(fluidRow(
-#     selectInput(
-#       inputId = 'feature',
-#       label = 'Feature',
-#       choices = names(hp_train)[sapply(hp_train, is.factor)],
-#       selected = 'grade'
-#     )
-#   ),
-#   fluidRow(plotOutput('plot')))
-#   
-#   server <- function(input, output) {
-#     output$plot <- renderPlot({
-#       g1 <- ggplot(hp_train,
-#                    aes(x = hp_train[, input$feature])) +
-#         geom_bar(color = 'darkcyan', fill = 'darkcyan') +
-#         theme_minimal() +
-#         labs(x = input$feature, y = 'Count')
-#       
-#       g2 <- ggplot(hp_train,
-#                    aes(x = hp_train[, input$feature], y = log(price))) +
-#         geom_boxplot(color = 'darkcyan') +
-#         theme_minimal() +
-#         theme(legend.position = 'none') +
-#         labs(x = input$feature, y = 'House Price')
-#       
-#       grobs <- list()
-#       grobs[[1]] <- g1
-#       grobs[[2]] <- g2
-#       grid.arrange(grobs = grobs)
-#     })
-#   }
-#   
-#   shinyApp(ui = ui, server = server)
-#   
-# } else{
-
-for (feature in names(hp_train)[sapply(hp_train, is.factor)]) {
-  g1 <- ggplot(hp_train,
-               aes(x = hp_train[, feature])) +
-    geom_bar(color = 'darkcyan', fill = 'darkcyan') +
-    theme_minimal() +
-    theme(
-      legend.position = 'none',
-      plot.title = element_text(
-        hjust = 0.5,
-        size = 12,
-        face = 'bold'
+if (params$shiny == FALSE) {
+  for (feature in names(hp_train)[sapply(hp_train, is.factor)]) {
+    g1 <- ggplot(hp_train,
+                 aes(x = hp_train[, feature])) +
+      geom_bar(color = 'darkcyan', fill = 'darkcyan') +
+      theme_minimal() +
+      theme(
+        legend.position = 'none',
+        plot.title = element_text(
+          hjust = 0.5,
+          size = 12,
+          face = 'bold'
+        )
+      ) +
+      labs(x = '',
+           y = 'Count',
+           title = paste0(toupper(substr(feature, 1, 1)), tolower(substr(
+             feature, 2, nchar(feature)
+           ))))
+    
+    g2 <- ggplot(hp_train,
+                 aes(x = hp_train[, feature], y = log(price))) +
+      geom_boxplot(color = 'darkcyan', size = 0.5) +
+      theme_minimal() +
+      theme(legend.position = 'none') +
+      labs(x = '', y = 'House Price')
+    
+    grobs <- list()
+    grobs[[1]] <- g1
+    grobs[[2]] <- g2
+    grid.arrange(grobs = grobs)
+  }
+} else {
+  shinyApp(
+    ui = fluidPage(fluidRow(
+      selectInput(
+        inputId = 'feature',
+        label = 'Factor Feature',
+        choices = sort(names(hp_train)[sapply(hp_train, is.factor)]),
+        selected = 'bedrooms'
       )
-    ) +
-    labs(x = '',
-         y = 'Count',
-         title = paste0(toupper(substr(feature, 1, 1)), tolower(substr(
-           feature, 2, nchar(feature)
-         ))))
+    ),
+    fluidRow(plotOutput('plot'))),
+    
+    server = function(input, output) {
+      output$plot <- renderPlot({
+        g1 <- ggplot(hp_train,
+                     aes(x = hp_train[, input$feature])) +
+          geom_bar(color = 'darkcyan', fill = 'darkcyan') +
+          theme_minimal() +
+          labs(x = input$feature, y = 'Count')
+        
+        g2 <- ggplot(hp_train,
+                     aes(x = hp_train[, input$feature], y = log(price))) +
+          geom_boxplot(color = 'darkcyan') +
+          theme_minimal() +
+          theme(legend.position = 'none') +
+          labs(x = input$feature, y = 'House Price')
+        
+        grobs <- list()
+        grobs[[1]] <- g1
+        grobs[[2]] <- g2
+        grid.arrange(grobs = grobs)
+      })
+    },
+    
+    options = list(height = 500)
+  )
   
-  g2 <- ggplot(hp_train,
-               aes(x = hp_train[, feature], y = log(price))) +
-    geom_boxplot(color = 'darkcyan') +
-    theme_minimal() +
-    theme(legend.position = 'none') +
-    labs(x = '', y = 'House Price')
-  
-  grobs <- list()
-  grobs[[1]] <- g1
-  grobs[[2]] <- g2
-  grid.arrange(grobs = grobs)
 }
-# }
 
 ```
 
 
 ``` {r Numerical Features, echo=FALSE, message = FALSE, fig.align = 'center'}
 
-for (feature in names(hp_train)[sapply(hp_train, is.numeric)]) {
-  g1 <- ggplot(hp_train,
-               aes(x = hp_train[, feature])) +
-    geom_density(color = 'darkcyan', fill = 'darkcyan') +
-    theme_minimal() +
-    theme(
-      legend.position = 'none',
-      plot.title = element_text(
-        hjust = 0.5,
-        size = 12,
-        face = 'bold'
+if (params$shiny == FALSE) {
+  for (feature in names(hp_train)[sapply(hp_train, is.numeric)]) {
+    g1 <- ggplot(hp_train,
+                 aes(x = hp_train[, feature])) +
+      geom_density(color = 'darkcyan', fill = 'darkcyan') +
+      theme_minimal() +
+      theme(
+        legend.position = 'none',
+        plot.title = element_text(
+          hjust = 0.5,
+          size = 12,
+          face = 'bold'
+        )
+      ) +
+      labs(x = '',
+           y = 'Count',
+           title = paste0(toupper(substr(feature, 1, 1)), tolower(substr(
+             feature, 2, nchar(feature)
+           ))))
+    
+    g2 <- ggplot(hp_train,
+                 aes(x = hp_train[, feature], y = price)) +
+      geom_point(color = 'darkcyan', size = 0.5) +
+      theme_minimal() +
+      theme(legend.position = 'none') +
+      labs(x = '', y = 'House Price')
+    
+    grobs <- list()
+    grobs[[1]] <- g1
+    grobs[[2]] <- g2
+    grid.arrange(grobs = grobs)
+  }
+} else {
+  shinyApp(
+    ui = fluidPage(fluidRow(
+      selectInput(
+        inputId = 'feature',
+        label = 'Numerical Feature',
+        choices = sort(names(hp_train)[sapply(hp_train, is.numeric)]),
+        selected = 'sqft_living'
       )
-    ) +
-    labs(x = '',
-         y = 'Count',
-         title = paste0(toupper(substr(feature, 1, 1)), tolower(substr(
-           feature, 2, nchar(feature)
-         ))))
+    ),
+    fluidRow(plotOutput('plot'))),
+    
+    server = function(input, output) {
+      output$plot <- renderPlot({
+        g1 <- ggplot(hp_train,
+                     aes(x = hp_train[, input$feature])) +
+          geom_density(color = 'darkcyan', fill = 'darkcyan') +
+          theme_minimal() +
+          theme(
+            legend.position = 'none',
+            plot.title = element_text(
+              hjust = 0.5,
+              size = 12,
+              face = 'bold'
+            )
+          ) +
+          labs(x = '',
+               y = 'Count',
+               title = paste0(toupper(substr(input$feature, 1, 1)), tolower(substr(
+                 input$feature, 2, nchar(input$feature)
+               ))))
+        
+        g2 <- ggplot(hp_train,
+                     aes(x = hp_train[, input$feature], y = price)) +
+          geom_point(color = 'darkcyan', size = 0.5) +
+          theme_minimal() +
+          theme(legend.position = 'none') +
+          labs(x = '', y = 'House Price')
+        
+        grobs <- list()
+        grobs[[1]] <- g1
+        grobs[[2]] <- g2
+        grid.arrange(grobs = grobs)
+      })
+    },
+    
+    options = list(height = 500)
+  )
   
-  g2 <- ggplot(hp_train,
-               aes(x = hp_train[, feature], y = price)) +
-    geom_point(color = 'darkcyan') +
-    theme_minimal() +
-    theme(legend.position = 'none') +
-    labs(x = '', y = 'House Price')
-  
-  grobs <- list()
-  grobs[[1]] <- g1
-  grobs[[2]] <- g2
-  grid.arrange(grobs = grobs)
 }
 
 ```

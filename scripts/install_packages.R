@@ -2,16 +2,21 @@
 #### THIS SCRIPT CHECK IF NECESSARY PACKAGES ARE INSTALLED AND LOADED
 ####
 
-packages_list <- c('dplyr',
-                   'corrplot',
-                   'tidyr',
-                   'ggmap',
-                   'ggplot2',
-                   'GGally',
-                   'grid',
-                   'gridExtra',
-                   'shiny',
-                   'caret')
+packages_list <- c(
+  'dplyr',
+  'corrplot',
+  'tidyr',
+  'ggmap',
+  'ggplot2',
+  'GGally',
+  'grid',
+  'gridExtra',
+  'shiny',
+  'doMC',
+  'caret',
+  'ranger',
+  'MLmetrics'
+)
 
 for (i in packages_list) {
   if (!i %in% installed.packages()) {
@@ -30,4 +35,3 @@ for (i in packages_list) {
 #   's]: ',
 #   'All necessary packages installed and loaded'
 # ))
-
