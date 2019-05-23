@@ -13,8 +13,11 @@ packages_list <- c(
   'gridExtra',
   'shiny',
   'doMC',
+  'parallel',
+  'doParallel',
   'caret',
   'ranger',
+  'glmnet',
   'MLmetrics'
 )
 
@@ -31,7 +34,7 @@ for (i in packages_list) {
 
 # print(paste0(
 #   '[',
-#   round(difftime(Sys.time(), start_time, units = 'secs'), 1),
-#   's]: ',
+#   round(difftime(Sys.time(), start_time, units = 'mins'), 1),
+#   'm]: ',
 #   'All necessary packages installed and loaded'
 # ))

@@ -18,8 +18,8 @@ plot_counter = plot_counter + 1
 print(
   paste0(
     '[',
-    round(difftime(Sys.time(), start_time, units = 'secs'), 1),
-    's]: ',
+    round(difftime(Sys.time(), start_time, units = 'mins'), 1),
+    'm]: ',
     'Mixed Bubble Correlation Matrix is generated and saved in /plots!'
   )
 )
@@ -47,8 +47,8 @@ plot_counter = plot_counter + 1
 print(
   paste0(
     '[',
-    round(difftime(Sys.time(), start_time, units = 'secs'), 1),
-    's]: ',
+    round(difftime(Sys.time(), start_time, units = 'mins'), 1),
+    'm]: ',
     'GGpairs Correlation Matrix is generated and saved in /plots!'
   )
 )
@@ -97,8 +97,8 @@ for (feature in names(hp_train)[sapply(hp_train, is.factor)]) {
 
 print(paste0(
   '[',
-  round(difftime(Sys.time(), start_time, units = 'secs'), 1),
-  's]: ',
+  round(difftime(Sys.time(), start_time, units = 'mins'), 1),
+  'm]: ',
   'Plots for Factor Features are generated and saved in /plots!'
 ))
 
@@ -147,8 +147,8 @@ for (feature in names(hp_train)[sapply(hp_train, is.numeric)]) {
 print(
   paste0(
     '[',
-    round(difftime(Sys.time(), start_time, units = 'secs'), 1),
-    's]: ',
+    round(difftime(Sys.time(), start_time, units = 'mins'), 1),
+    'm]: ',
     'Plots for Numericals Features are generated and saved in /plots!'
   )
 )

@@ -9,8 +9,8 @@ hp_train <-
            stringsAsFactors = FALSE)
 
 print(paste0('[', round(
-  difftime(Sys.time(), start_time, units = 'secs'), 1
-), 's]: ',
+  difftime(Sys.time(), start_time, units = 'mins'), 1
+), 'm]: ',
 'Train Set imported'))
 
 
@@ -21,8 +21,8 @@ hp_test <-
            stringsAsFactors = FALSE)
 
 print(paste0('[', round(
-  difftime(Sys.time(), start_time, units = 'secs'), 1
-), 's]: ',
+  difftime(Sys.time(), start_time, units = 'mins'), 1
+), 'm]: ',
 'Test Set imported'))
 
 
@@ -95,21 +95,21 @@ hp_train$view <- as.factor(hp_train$view)
 hp_train$condition <- as.factor(hp_train$condition)
 hp_train$grade <- as.factor(hp_train$grade)
 hp_train$bedrooms <- as.factor(hp_train$bedrooms)
-hp_train$bathrooms <- as.factor(hp_train$bathrooms)
+# hp_train$bathrooms <- as.factor(hp_train$bathrooms)
 hp_train$floors <- as.factor(hp_train$floors)
-hp_train$zipcode <- as.factor(hp_train$zipcode)
+# hp_train$zipcode <- as.factor(hp_train$zipcode)
 hp_test$waterfront <- as.factor(hp_test$waterfront)
 hp_test$view <- as.factor(hp_test$view)
 hp_test$condition <- as.factor(hp_test$condition)
 hp_test$grade <- as.factor(hp_test$grade)
 hp_test$bedrooms <- as.factor(hp_test$bedrooms)
-hp_test$bathrooms <- as.factor(hp_test$bathrooms)
+# hp_test$bathrooms <- as.factor(hp_test$bathrooms)
 hp_test$floors <- as.factor(hp_test$floors)
-hp_test$zipcode <- as.factor(hp_test$zipcode)
+# hp_test$zipcode <- as.factor(hp_test$zipcode)
 
 
 # Read and Transform Dataset Done ----
 print(paste0('[', round(
-  difftime(Sys.time(), start_time, units = 'secs'), 1
-), 's]: ',
+  difftime(Sys.time(), start_time, units = 'mins'), 1
+), 'm]: ',
 'Working dataset ready!'))
