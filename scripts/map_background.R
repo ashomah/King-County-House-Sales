@@ -34,6 +34,27 @@ mean_lat <- mean(long_lat$lat)
 #   zoom = 10,
 #   filename = "data/hp_map_10_temp"
 # )
+# hp_map_8_terrain <- get_map(
+#   location = c(lon = mean_long, lat = mean_lat),
+#   maptype = "terrain",
+#   zoom = 8,
+#   filename = "data/hp_map_8_terrain_temp"
+# )
+# hp_map_9_terrain <- get_map(
+#   location = c(lon = mean_long, lat = mean_lat),
+#   maptype = "terrain",
+#   zoom = 9,
+#   filename = "data/hp_map_9_terrain_temp"
+# )
+# hp_map_10_terrain <- get_map(
+#   location = c(lon = mean_long, lat = mean_lat),
+#   maptype = "terrain",
+#   zoom = 10,
+#   filename = "data/hp_map_10_terrain_temp"
+# )
 # save(hp_map_8, file = 'data_output/hp_map_8.rda')
 # save(hp_map_9, file = 'data_output/hp_map_9.rda')
 # save(hp_map_10, file = 'data_output/hp_map_10.rda')
+# save(hp_map_8_terrain, file = 'data_output/hp_map_8_terrain.rda')
+# save(hp_map_9_terrain, file = 'data_output/hp_map_9_terrain.rda')
+# save(hp_map_10_terrain, file = 'data_output/hp_map_10_terrain.rda')
