@@ -3,10 +3,11 @@
 ####
 
 # Loading Train Set ----
-hp_train <-
+raw_hp_train <-
   read.csv('data_input/house_price_train.csv',
            sep = ',',
            stringsAsFactors = FALSE)
+hp_train <- raw_hp_train
 
 print(paste0('[', round(
   difftime(Sys.time(), start_time, units = 'mins'), 1
@@ -15,10 +16,11 @@ print(paste0('[', round(
 
 
 # Loading Test Set ----
-hp_test <-
+raw_hp_test <-
   read.csv('data_input/house_price_test.csv',
            sep = ',',
            stringsAsFactors = FALSE)
+hp_test <- raw_hp_test
 
 print(paste0('[', round(
   difftime(Sys.time(), start_time, units = 'mins'), 1

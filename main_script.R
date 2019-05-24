@@ -52,6 +52,8 @@ source('scripts/featsel_lasso.R')
 # Save RData for RMarkdown ----
 save(
   list = c(
+    'raw_hp_train',
+    'raw_hp_test',
     'hp_train',
     'hp_test',
     'long_lat',
@@ -60,6 +62,7 @@ save(
     'houses_sold_multi_times_test',
     'houses_test',
     'all_results',
+    'all_real_results',
     'varsSelected',
     'varsNotSelected'
   ),
