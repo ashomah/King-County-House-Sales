@@ -6,6 +6,7 @@ packages_list <- c(
   'dplyr',
   'corrplot',
   'tidyr',
+  'leaflet',
   'ggmap',
   'ggplot2',
   'GGally',
@@ -15,10 +16,16 @@ packages_list <- c(
   'doMC',
   'parallel',
   'doParallel',
+  'foreach',
   'caret',
+  'xgboost',
   'ranger',
   'glmnet',
-  'MLmetrics'
+  'MLmetrics',
+  'data.table',
+  'leaderCluster',
+  'dbscan',
+  'factoextra'
 )
 
 for (i in packages_list) {
