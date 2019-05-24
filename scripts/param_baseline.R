@@ -120,7 +120,8 @@ fitControl <-
     method = 'repeatedcv',
     number = 10,
     repeats = 3,
-    verboseIter = TRUE
+    verboseIter = TRUE,
+    allowParallel = TRUE
   )
 
 

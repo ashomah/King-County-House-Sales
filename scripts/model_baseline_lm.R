@@ -2,10 +2,18 @@
 #### THIS SCRIPT FITS A MODEL AND MAKE PREDICTIONS
 ####
 
+set.seed(2019)
+
 # Baseline with a Linear Regression ----
 if (calculate == TRUE) {
   # cl <- makePSOCKcluster(2)
   # registerDoParallel(cl, cores = detectCores() - 1)
+  print(paste0('[',
+               round(
+                 difftime(Sys.time(), start_time, units = 'mins'), 1
+               ),
+               'm]: ',
+               'Starting Model Fit...'))
   time_fit_start <- Sys.time()
   hp_fit_baseline_lm <- train(
     price ~ .,
@@ -36,10 +44,9 @@ results_baseline_lm <-
   as.data.frame(
     cbind(
       rbind(defaultSummary(comp_baseline_lm)),
-      'MAPE' = MAPE(y_pred = hp_pred_baseline_lm, y_true = hp_train_B_proc$price) /
-        100,
+      'MAPE' = MAPE(y_pred = hp_pred_baseline_lm, y_true = hp_train_B_proc$price),
       'Coefficients' = length(hp_fit_baseline_lm$finalModel$coefficients),
-      'Train Time (min)' = round(time_fit_duration_baseline_lm, 1),
+      'Train Time (min)' = round(as.numeric(time_fit_duration_baseline_lm, units = 'mins'), 1),
       'CV | RMSE' = get_best_result(hp_fit_baseline_lm)[, 'RMSE'],
       'CV | Rsquared' = get_best_result(hp_fit_baseline_lm)[, 'Rsquared'],
       'CV | MAE' = get_best_result(hp_fit_baseline_lm)[, 'MAE']
@@ -76,9 +83,33 @@ write.csv(submission_baseline_lm,
           'submissions/baseline_lm.csv',
           row.names = FALSE)
 
+# Results for unscaled and uncentered submission
+hp_pred_baseline_lm_train_B <-
+  predict(hp_fit_baseline_lm, hp_train_B_proc)
+submission_baseline_lm_train_B <-
+  cbind('id' = hp_test_id,
+        'price' = hp_pred_baseline_lm_train_B * sd(hp_train_A$price) + mean(hp_train_A$price))
+
+real_results_baseline_lm <-
+  as.data.frame(
+    cbind(
+      'RMSE' = RMSE(y_pred = submission_baseline_lm_train_B[,'price'], y_true = hp_train_B[,'price']),
+      'Rsquared' = R2_Score(y_pred = submission_baseline_lm_train_B[,'price'], y_true = hp_train_B[,'price']),
+      'MAE' = MAE(y_pred = submission_baseline_lm_train_B[,'price'], y_true = hp_train_B[,'price']),
+      'MAPE' = MAPE(y_pred = submission_baseline_lm_train_B[,'price'], y_true = hp_train_B[,'price']),
+      'Coefficients' = length(hp_fit_baseline_lm$finalModel$coefficients),
+      'Train Time (min)' = round(as.numeric(time_fit_duration_baseline_lm, units = 'mins'), 1)
+    )
+  )
+all_real_results <- rbind('Baseline Lin. Reg.' = real_results_baseline_lm)
+
+
 print(paste0(
   '[',
   round(difftime(Sys.time(), start_time, units = 'mins'), 1),
   'm]: ',
   'Baseline with Linear Regression is done!'
 ))
+
+
+
