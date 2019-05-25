@@ -104,6 +104,41 @@ hp_train_A_proc_all_fact <- predict(preProcValues, hp_train_A_all_fact)
 hp_train_B_proc_all_fact <- predict(preProcValues, hp_train_B_all_fact)
 hp_test_proc_all_fact <- predict(preProcValues, hp_test_all_fact)
 
+
+# Duplicate datasets using log10 on price ----
+hp_train_A_log <- hp_train_A
+hp_train_B_log <- hp_train_B
+hp_test_log <- hp_test
+hp_train_A_log$price <- log10(hp_train_A_log$price)
+hp_train_B_log$price <- log10(hp_train_B_log$price)
+hp_test_log$price <- log10(hp_test_log$price)
+
+preProcValues <-
+  preProcess(hp_train_A_log, method = c("center", "scale"))
+hp_train_A_log_proc <- predict(preProcValues, hp_train_A_log)
+hp_train_B_log_proc <- predict(preProcValues, hp_train_B_log)
+hp_test_log_proc <- predict(preProcValues, hp_test_log)
+
+hp_train_log_all_fact <- hp_train
+hp_train_log_all_fact$price <- log10(hp_train_log_all_fact$price)
+hp_test_log_all_fact <- hp_test_log
+hp_train_log_all_fact$bathrooms <- as.factor(hp_train_log_all_fact$bathrooms)
+hp_train_log_all_fact$zipcode <- as.factor(hp_train_log_all_fact$zipcode)
+hp_test_log_all_fact$bathrooms <- as.factor(hp_test_log_all_fact$bathrooms)
+hp_test_log_all_fact$zipcode <- as.factor(hp_test_log_all_fact$zipcode)
+
+hp_train_A_log_all_fact <- hp_train_log_all_fact[index, ]
+hp_train_B_log_all_fact <- hp_train_log_all_fact[-index, ]
+
+preProcValues <-
+  preProcess(hp_train_A_log_all_fact, method = c("center", "scale"))
+hp_train_A_log_all_fact_proc <- predict(preProcValues, hp_train_A_log_all_fact)
+hp_train_B_log_all_fact_proc <- predict(preProcValues, hp_train_B_log_all_fact)
+hp_test_log_all_fact_proc <- predict(preProcValues, hp_test_log_all_fact)
+
+
+
+
 print(
   paste0(
     '[',

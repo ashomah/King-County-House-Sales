@@ -4,6 +4,7 @@
 
 packages_list <- c(
   'dplyr',
+  'tibble',
   'corrplot',
   'tidyr',
   'leaflet',
@@ -25,6 +26,8 @@ packages_list <- c(
   'data.table',
   'leaderCluster',
   'dbscan',
+  'knitr',
+  'kableExtra',
   'factoextra'
 )
 

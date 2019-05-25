@@ -25,26 +25,49 @@ source('scripts/param_baseline.R')
 calculate <- FALSE
 source('scripts/model_baseline_lm.R')
 
-# Baseline Linear Regression All Fact----
+# Baseline Linear Regression with log10(price) ----
+calculate <- FALSE
+source('scripts/model_baseline_lm_log.R')
+
+# Baseline Linear Regression All Fact ----
 calculate <- FALSE
 source('scripts/model_baseline_lm_all_fact.R')
+
+# Baseline Linear Regression All Fact with log10(price) ----
+calculate <- FALSE
+source('scripts/model_baseline_lm_log_all_fact.R')
 
 # Baseline Random Forest ----
 calculate <- FALSE
 source('scripts/model_baseline_ranger.R')
 
+# Baseline Random Forest with log10(price) ----
+calculate <- FALSE
+source('scripts/model_baseline_ranger_log.R')
+
 # Baseline Random Forest All Fact ----
 calculate <- FALSE
 source('scripts/model_baseline_ranger_all_fact.R')
+
+# Baseline Random Forest All Fact with log10(price) ----
+calculate <- FALSE
+source('scripts/model_baseline_ranger_log_all_fact.R')
 
 # Baseline XGBoost ----
 calculate <- FALSE
 source('scripts/model_baseline_xgb.R')
 
+# Baseline XGBoost with log10(price) ----
+calculate <- FALSE
+source('scripts/model_baseline_xgb_log.R')
+
 # Baseline XGBoost All Fact ----
 calculate <- FALSE
 source('scripts/model_baseline_xgb_all_fact.R')
 
+# Baseline XGBoost All Fact with log10(price) ----
+calculate <- FALSE
+source('scripts/model_baseline_xgb_log_all_fact.R')
 # Feature Selection Lasso ----
 source('scripts/featsel_lasso.R')
 
@@ -76,32 +99,33 @@ print(paste0('[', round(
 ), 'm]: ',
 'All operations are over!'))
 
-# # Render RMarkdown Report ----
-# if (is.null(webshot:::find_phantom())) {
-#   webshot::install_phantomjs()
-# }
-# invisible(
-#   rmarkdown::render(
-#     'King-County-House-Sales-Report.Rmd',
-#     'github_document',
-#     params = list(shiny = FALSE),
-#     runtime = 'static'
-#   )
-# )
-# invisible(
-#   rmarkdown::render(
-#     'King-County-House-Sales-Report.Rmd',
-#     'html_document',
-#     params = list(shiny = FALSE)
-#   )
+# Render RMarkdown Report ----
+if (is.null(webshot:::find_phantom())) {
+  webshot::install_phantomjs()
+}
+invisible(
+  rmarkdown::render(
+    'King-County-House-Sales-Report.Rmd',
+    'github_document',
+    params = list(shiny = FALSE),
+    runtime = 'static'
+  )
+)
+invisible(
+  rmarkdown::render(
+    'King-County-House-Sales-Report.Rmd',
+    'html_document',
+    params = list(shiny = FALSE)
+  )
+)
 # )
 # invisible(
 #   rmarkdown::run(
 #     'King-County-House-Sales-Report.Rmd'
 #   )
 # )
-# 
-# print(paste0('[', round(
-#   difftime(Sys.time(), start_time, units = 'mins'), 1
-# ), 'm]: ',
-# 'Report generated! ---END---'))
+
+print(paste0('[', round(
+  difftime(Sys.time(), start_time, units = 'mins'), 1
+), 'm]: ',
+'Report generated! ---END---'))

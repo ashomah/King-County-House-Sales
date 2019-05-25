@@ -124,7 +124,7 @@ for (feature in names(hp_train)[sapply(hp_train, is.numeric)]) {
       )
     ) +
     labs(x = '',
-         y = 'Count',
+         y = 'Density',
          title = paste0(toupper(substr(feature, 1, 1)), tolower(substr(
            feature, 2, nchar(feature)
          ))))
