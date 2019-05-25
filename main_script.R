@@ -77,6 +77,22 @@ source('scripts/feateng_renovation.R')
 # Feature Engineering Clusters ----
 source('scripts/feateng_clusters.R')
 
+# XGBoost Feature Engineering ----
+calculate <- FALSE
+source('scripts/model_xgb_FE.R')
+
+# XGBoost Clusters ----
+calculate <- FALSE
+source('scripts/model_xgb_clusters.R')
+
+# XGBoost Clusters Fact ----
+calculate <- FALSE
+source('scripts/model_xgb_clusters_fact.R')
+
+# XGBoost Clusters All Fact ----
+calculate <- FALSE
+source('scripts/model_xgb_clusters_all_fact.R')
+
 # Feature Selection Lasso ----
 source('scripts/featsel_lasso.R')
 
