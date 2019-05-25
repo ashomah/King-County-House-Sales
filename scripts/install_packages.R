@@ -27,6 +27,7 @@ packages_list <- c(
   'leaderCluster',
   'dbscan',
   'knitr',
+  'RColorBrewer',
   'kableExtra',
   'factoextra'
 )
