@@ -13,12 +13,12 @@ hp_test_FE1$house_age <- 2015 - hp_test$yr_built
 
 
 # Add House Age since last Renovation ----
-hp_train_A_FE1$house_age_since_renovation <- hp_train_A_FE1$house_age
-hp_train_B_FE1$house_age_since_renovation <- hp_train_B_FE1$house_age
-hp_test_FE1$house_age_since_renovation <- hp_test_FE1$house_age
-hp_train_A_FE1$house_age_since_renovation[hp_train_A_FE1$yr_renovated != 0] <- 2015 - hp_train_A_FE1$yr_renovated[hp_train_A_FE1$yr_renovated != 0]
-hp_train_B_FE1$house_age_since_renovation[hp_train_B_FE1$yr_renovated != 0] <- 2015 - hp_train_B_FE1$yr_renovated[hp_train_B_FE1$yr_renovated != 0]
-hp_test_FE1$house_age_since_renovation[hp_test_FE1$yr_renovated != 0] <- 2015 - hp_test_FE1$yr_renovated[hp_test_FE1$yr_renovated != 0]
+hp_train_A_FE1$age_renovation <- hp_train_A_FE1$house_age
+hp_train_B_FE1$age_renovation <- hp_train_B_FE1$house_age
+hp_test_FE1$age_renovation <- hp_test_FE1$house_age
+hp_train_A_FE1$age_renovation[hp_train_A_FE1$yr_renovated != 0] <- 2015 - hp_train_A_FE1$yr_renovated[hp_train_A_FE1$yr_renovated != 0]
+hp_train_B_FE1$age_renovation[hp_train_B_FE1$yr_renovated != 0] <- 2015 - hp_train_B_FE1$yr_renovated[hp_train_B_FE1$yr_renovated != 0]
+hp_test_FE1$age_renovation[hp_test_FE1$yr_renovated != 0] <- 2015 - hp_test_FE1$yr_renovated[hp_test_FE1$yr_renovated != 0]
 
 
 # Add Renovated Flag ----

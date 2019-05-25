@@ -6,6 +6,8 @@
 start_time <- Sys.time()
 print(paste0('---START--- Starting at ', start_time))
 
+options(warn = -1)
+
 # Install Necessary Packages ----
 source('scripts/install_packages.R')
 
@@ -68,6 +70,13 @@ source('scripts/model_baseline_xgb_all_fact.R')
 # Baseline XGBoost All Fact with log10(price) ----
 calculate <- FALSE
 source('scripts/model_baseline_xgb_log_all_fact.R')
+
+# Feature Engineering Renovation ----
+source('scripts/feateng_renovation.R')
+
+# Feature Engineering Clusters ----
+source('scripts/feateng_clusters.R')
+
 # Feature Selection Lasso ----
 source('scripts/featsel_lasso.R')
 
@@ -79,6 +88,9 @@ save(
     'raw_hp_test',
     'hp_train',
     'hp_test',
+    'hp_train_A',
+    'hp_train_A_FE2',
+    'hp_train_B',
     'long_lat',
     'houses_sold_multi_times_train',
     'houses_train',
@@ -87,7 +99,15 @@ save(
     'all_results',
     'all_real_results',
     'varsSelected',
-    'varsNotSelected'
+    'varsNotSelected',
+    'dbscan_clusters_train_A',
+    'dbscan_clusters_train_B',
+    'cluster_plot_A',
+    'cluster_plot_B',
+    'hp_fit_baseline_xgb_log_all_fact',
+    'hp_fit_baseline_ranger_log',
+    'hp_fit_xgb_FE',
+    'hp_fit_baseline_ranger_log_all_fact'
   ),
   file = 'data_output/RMarkdown_Objects.RData'
 )
