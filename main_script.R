@@ -6,7 +6,7 @@
 start_time <- Sys.time()
 print(paste0('---START--- Starting at ', start_time))
 
-options(warn = -1)
+options(warn = 0) # -1 to hide the warnings
 
 # Install Necessary Packages ----
 source('scripts/install_packages.R')
@@ -100,6 +100,18 @@ source('scripts/featsel_lasso.R')
 calculate <- FALSE
 source('scripts/featsel_rfe.R')
 
+# XGBoost Post RFE ----
+calculate <- FALSE
+source('scripts/model_xgb_rfe.R')
+
+# XGBoost Tuning ----
+calculate <- FALSE
+source('scripts/model_tuning_xgb.R')
+
+# Ranger Tuning ----
+calculate <- FALSE
+source('scripts/model_tuning_ranger.R')
+
 # Save RData for RMarkdown ----
 save(
   list = c(
@@ -133,6 +145,10 @@ save(
     'hp_train_A_rfe',
     'hp_train_B_rfe',
     'hp_test_rfe',
+    'hp_fit_xgb_tuning',
+    'hp_fit_ranger_tuning',
+    'residuals_xgb_tuning',
+    'submission_xgb_tuning_train_B'
   ),
   file = 'data_output/RMarkdown_Objects.RData'
 )
@@ -163,12 +179,9 @@ invisible(
     params = list(shiny = FALSE)
   )
 )
-# )
-# invisible(
-#   rmarkdown::run(
-#     'King-County-House-Sales-Report.Rmd'
-#   )
-# )
+# invisible(rmarkdown::run('King-County-House-Sales-Report.Rmd'))
+
+beep(8)
 
 print(paste0('[', round(
   difftime(Sys.time(), start_time, units = 'mins'), 1
