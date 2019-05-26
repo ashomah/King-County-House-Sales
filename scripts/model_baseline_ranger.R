@@ -31,7 +31,7 @@ if (calculate == TRUE) {
       metric = 'MAE',
       importance = 'impurity',
       verbose = TRUE,
-      num.thread = detectCores()-1
+      num.thread = detectCores() - 1
     )
   time_fit_end <- Sys.time()
   # stopCluster(cl)
@@ -61,7 +61,10 @@ results_baseline_ranger <-
       rbind(defaultSummary(comp_baseline_ranger)),
       'MAPE' = MAPE(y_pred = hp_pred_baseline_ranger, y_true = hp_train_B_proc$price),
       'Coefficients' = length(hp_fit_baseline_ranger$finalModel$xNames),
-      'Train Time (min)' = round(as.numeric(time_fit_duration_baseline_ranger, units = 'mins'), 1),
+      'Train Time (min)' = round(
+        as.numeric(time_fit_duration_baseline_ranger, units = 'mins'),
+        1
+      ),
       'CV | RMSE' = get_best_result(hp_fit_baseline_ranger)[, 'RMSE'],
       'CV | Rsquared' = get_best_result(hp_fit_baseline_ranger)[, 'Rsquared'],
       'CV | MAE' = get_best_result(hp_fit_baseline_ranger)[, 'MAE']
@@ -102,8 +105,8 @@ plot_counter = plot_counter + 1
 hp_pred_baseline_ranger_test <-
   predict(hp_fit_baseline_ranger, hp_test_proc)
 submission_baseline_ranger <-
-  cbind('id' = hp_test_id,
-        'price' = hp_pred_baseline_ranger_test * sd(hp_train_A$price) + mean(hp_train_A$price))
+  cbind(#'id' = hp_test_id,
+    'price' = hp_pred_baseline_ranger_test * sd(hp_train_A$price) + mean(hp_train_A$price))
 write.csv(submission_baseline_ranger,
           'submissions/baseline_ranger.csv',
           row.names = FALSE)
@@ -112,21 +115,25 @@ write.csv(submission_baseline_ranger,
 hp_pred_baseline_ranger_train_B <-
   predict(hp_fit_baseline_ranger, hp_train_B_proc)
 submission_baseline_ranger_train_B <-
-  cbind('id' = hp_test_id,
-        'price' = hp_pred_baseline_ranger_train_B * sd(hp_train_A$price) + mean(hp_train_A$price))
+  cbind(#'id' = hp_test_id,
+    'price' = hp_pred_baseline_ranger_train_B * sd(hp_train_A$price) + mean(hp_train_A$price))
 
 real_results_baseline_ranger <-
   as.data.frame(
     cbind(
-      'RMSE' = RMSE(y_pred = submission_baseline_ranger_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'Rsquared' = R2_Score(y_pred = submission_baseline_ranger_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'MAE' = MAE(y_pred = submission_baseline_ranger_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'MAPE' = MAPE(y_pred = submission_baseline_ranger_train_B[,'price'], y_true = hp_train_B[,'price']),
+      'RMSE' = RMSE(y_pred = submission_baseline_ranger_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'Rsquared' = R2_Score(y_pred = submission_baseline_ranger_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'MAE' = MAE(y_pred = submission_baseline_ranger_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'MAPE' = MAPE(y_pred = submission_baseline_ranger_train_B[, 'price'], y_true = hp_train_B[, 'price']),
       'Coefficients' = length(hp_fit_baseline_ranger$finalModel$xNames),
-      'Train Time (min)' = round(as.numeric(time_fit_duration_baseline_ranger, units = 'mins'), 1)
+      'Train Time (min)' = round(
+        as.numeric(time_fit_duration_baseline_ranger, units = 'mins'),
+        1
+      )
     )
   )
-all_real_results <- rbind(all_real_results, 'Baseline Ranger' = real_results_baseline_ranger)
+all_real_results <-
+  rbind(all_real_results, 'Baseline Ranger' = real_results_baseline_ranger)
 
 print(paste0('[',
              round(

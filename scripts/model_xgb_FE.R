@@ -47,7 +47,7 @@ residuals_xgb_FE <- resid(hp_fit_xgb_FE)
 hp_pred_xgb_FE <-
   predict(hp_fit_xgb_FE, hp_train_B_FE2)
 comp_xgb_FE <- data.frame(obs = hp_train_B_FE2$price,
-                                pred = hp_pred_xgb_FE)
+                          pred = hp_pred_xgb_FE)
 
 results_xgb_FE <-
   as.data.frame(
@@ -96,8 +96,10 @@ plot_counter = plot_counter + 1
 hp_pred_xgb_FE_test <-
   predict(hp_fit_xgb_FE, hp_test_FE2)
 submission_xgb_FE <-
-  cbind('id' = hp_test_id,
-        'price' = 10^(hp_pred_xgb_FE_test * sd(hp_train_A_log$price) + mean(hp_train_A_log$price)))
+  cbind(#'id' = hp_test_id,
+    'price' = 10 ^ (
+      hp_pred_xgb_FE_test * sd(hp_train_A_log$price) + mean(hp_train_A_log$price)
+    ))
 write.csv(submission_xgb_FE,
           'submissions/xgb_FE.csv',
           row.names = FALSE)
@@ -106,21 +108,24 @@ write.csv(submission_xgb_FE,
 hp_pred_xgb_FE_train_B <-
   predict(hp_fit_xgb_FE, hp_train_B_FE2)
 submission_xgb_FE_train_B <-
-  cbind('id' = hp_test_id,
-        'price' = 10^(hp_pred_xgb_FE_train_B * sd(hp_train_A_log$price) + mean(hp_train_A_log$price)))
+  cbind(#'id' = hp_test_id,
+    'price' = 10 ^ (
+      hp_pred_xgb_FE_train_B * sd(hp_train_A_log$price) + mean(hp_train_A_log$price)
+    ))
 
 real_results_xgb_FE <-
   as.data.frame(
     cbind(
-      'RMSE' = RMSE(y_pred = submission_xgb_FE_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'Rsquared' = R2_Score(y_pred = submission_xgb_FE_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'MAE' = MAE(y_pred = submission_xgb_FE_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'MAPE' = MAPE(y_pred = submission_xgb_FE_train_B[,'price'], y_true = hp_train_B[,'price']),
+      'RMSE' = RMSE(y_pred = submission_xgb_FE_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'Rsquared' = R2_Score(y_pred = submission_xgb_FE_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'MAE' = MAE(y_pred = submission_xgb_FE_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'MAPE' = MAPE(y_pred = submission_xgb_FE_train_B[, 'price'], y_true = hp_train_B[, 'price']),
       'Coefficients' = hp_fit_xgb_FE$finalModel$nfeatures,
       'Train Time (min)' = round(as.numeric(time_fit_duration_xgb_FE, units = 'mins'), 1)
     )
   )
-all_real_results <- rbind(all_real_results, 'FE XGBoost' = real_results_xgb_FE)
+all_real_results <-
+  rbind(all_real_results, 'FE XGBoost' = real_results_xgb_FE)
 
 print(paste0('[',
              round(

@@ -9,7 +9,7 @@ time_fit_end <- 0
 # Function to get the best results in caret ----
 get_best_result = function(caret_fit) {
   best = which(rownames(caret_fit$results) == rownames(caret_fit$bestTune))
-  best_result = caret_fit$results[best,]
+  best_result = caret_fit$results[best, ]
   rownames(best_result) = NULL
   best_result
 }
@@ -68,17 +68,15 @@ index <-
                       p = 0.8,
                       list = FALSE,
                       times = 1)
-hp_train_A <- hp_train[index, ]
-hp_train_B <- hp_train[-index, ]
+hp_train_A <- hp_train[index,]
+hp_train_B <- hp_train[-index,]
 
-print(
-  paste0(
-    '[',
-    round(difftime(Sys.time(), start_time, units = 'mins'), 1),
-    'm]: ',
-    'Train Set is split!'
-  )
-)
+print(paste0('[',
+             round(
+               difftime(Sys.time(), start_time, units = 'mins'), 1
+             ),
+             'm]: ',
+             'Train Set is split!'))
 
 
 # Center and Scale Train Sets and Test Set ----
@@ -90,18 +88,21 @@ hp_test_proc <- predict(preProcValues, hp_test)
 
 hp_train_all_fact <- hp_train
 hp_test_all_fact <- hp_test
-hp_train_all_fact$bathrooms <- as.factor(hp_train_all_fact$bathrooms)
+hp_train_all_fact$bathrooms <-
+  as.factor(hp_train_all_fact$bathrooms)
 hp_train_all_fact$zipcode <- as.factor(hp_train_all_fact$zipcode)
 hp_test_all_fact$bathrooms <- as.factor(hp_test_all_fact$bathrooms)
 hp_test_all_fact$zipcode <- as.factor(hp_test_all_fact$zipcode)
 
-hp_train_A_all_fact <- hp_train_all_fact[index, ]
-hp_train_B_all_fact <- hp_train_all_fact[-index, ]
+hp_train_A_all_fact <- hp_train_all_fact[index,]
+hp_train_B_all_fact <- hp_train_all_fact[-index,]
 
 preProcValues <-
   preProcess(hp_train_A_all_fact, method = c("center", "scale"))
-hp_train_A_proc_all_fact <- predict(preProcValues, hp_train_A_all_fact)
-hp_train_B_proc_all_fact <- predict(preProcValues, hp_train_B_all_fact)
+hp_train_A_proc_all_fact <-
+  predict(preProcValues, hp_train_A_all_fact)
+hp_train_B_proc_all_fact <-
+  predict(preProcValues, hp_train_B_all_fact)
 hp_test_proc_all_fact <- predict(preProcValues, hp_test_all_fact)
 
 
@@ -122,31 +123,34 @@ hp_test_log_proc <- predict(preProcValues, hp_test_log)
 hp_train_log_all_fact <- hp_train
 hp_train_log_all_fact$price <- log10(hp_train_log_all_fact$price)
 hp_test_log_all_fact <- hp_test_log
-hp_train_log_all_fact$bathrooms <- as.factor(hp_train_log_all_fact$bathrooms)
-hp_train_log_all_fact$zipcode <- as.factor(hp_train_log_all_fact$zipcode)
-hp_test_log_all_fact$bathrooms <- as.factor(hp_test_log_all_fact$bathrooms)
-hp_test_log_all_fact$zipcode <- as.factor(hp_test_log_all_fact$zipcode)
+hp_train_log_all_fact$bathrooms <-
+  as.factor(hp_train_log_all_fact$bathrooms)
+hp_train_log_all_fact$zipcode <-
+  as.factor(hp_train_log_all_fact$zipcode)
+hp_test_log_all_fact$bathrooms <-
+  as.factor(hp_test_log_all_fact$bathrooms)
+hp_test_log_all_fact$zipcode <-
+  as.factor(hp_test_log_all_fact$zipcode)
 
-hp_train_A_log_all_fact <- hp_train_log_all_fact[index, ]
-hp_train_B_log_all_fact <- hp_train_log_all_fact[-index, ]
+hp_train_A_log_all_fact <- hp_train_log_all_fact[index,]
+hp_train_B_log_all_fact <- hp_train_log_all_fact[-index,]
 
 preProcValues <-
   preProcess(hp_train_A_log_all_fact, method = c("center", "scale"))
-hp_train_A_log_all_fact_proc <- predict(preProcValues, hp_train_A_log_all_fact)
-hp_train_B_log_all_fact_proc <- predict(preProcValues, hp_train_B_log_all_fact)
-hp_test_log_all_fact_proc <- predict(preProcValues, hp_test_log_all_fact)
+hp_train_A_log_all_fact_proc <-
+  predict(preProcValues, hp_train_A_log_all_fact)
+hp_train_B_log_all_fact_proc <-
+  predict(preProcValues, hp_train_B_log_all_fact)
+hp_test_log_all_fact_proc <-
+  predict(preProcValues, hp_test_log_all_fact)
 
 
-
-
-print(
-  paste0(
-    '[',
-    round(difftime(Sys.time(), start_time, units = 'mins'), 1),
-    'm]: ',
-    'Data Sets are centered and scaled!'
-  )
-)
+print(paste0(
+  '[',
+  round(difftime(Sys.time(), start_time, units = 'mins'), 1),
+  'm]: ',
+  'Data Sets are centered and scaled!'
+))
 
 
 # Cross-Validation Settings ----
@@ -158,5 +162,3 @@ fitControl <-
     verboseIter = TRUE,
     allowParallel = TRUE
   )
-
-

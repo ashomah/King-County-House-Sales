@@ -96,8 +96,8 @@ plot_counter = plot_counter + 1
 hp_pred_baseline_xgb_test <-
   predict(hp_fit_baseline_xgb, hp_test_proc)
 submission_baseline_xgb <-
-  cbind('id' = hp_test_id,
-        'price' = hp_pred_baseline_xgb_test * sd(hp_train_A$price) + mean(hp_train_A$price))
+  cbind(#'id' = hp_test_id,
+    'price' = hp_pred_baseline_xgb_test * sd(hp_train_A$price) + mean(hp_train_A$price))
 write.csv(submission_baseline_xgb,
           'submissions/baseline_xgb.csv',
           row.names = FALSE)
@@ -106,21 +106,22 @@ write.csv(submission_baseline_xgb,
 hp_pred_baseline_xgb_train_B <-
   predict(hp_fit_baseline_xgb, hp_train_B_proc)
 submission_baseline_xgb_train_B <-
-  cbind('id' = hp_test_id,
-        'price' = hp_pred_baseline_xgb_train_B * sd(hp_train_A$price) + mean(hp_train_A$price))
+  cbind(#'id' = hp_test_id,
+    'price' = hp_pred_baseline_xgb_train_B * sd(hp_train_A$price) + mean(hp_train_A$price))
 
 real_results_baseline_xgb <-
   as.data.frame(
     cbind(
-      'RMSE' = RMSE(y_pred = submission_baseline_xgb_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'Rsquared' = R2_Score(y_pred = submission_baseline_xgb_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'MAE' = MAE(y_pred = submission_baseline_xgb_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'MAPE' = MAPE(y_pred = submission_baseline_xgb_train_B[,'price'], y_true = hp_train_B[,'price']),
+      'RMSE' = RMSE(y_pred = submission_baseline_xgb_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'Rsquared' = R2_Score(y_pred = submission_baseline_xgb_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'MAE' = MAE(y_pred = submission_baseline_xgb_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'MAPE' = MAPE(y_pred = submission_baseline_xgb_train_B[, 'price'], y_true = hp_train_B[, 'price']),
       'Coefficients' = hp_fit_baseline_xgb$finalModel$nfeatures,
       'Train Time (min)' = round(as.numeric(time_fit_duration_baseline_xgb, units = 'mins'), 1)
     )
   )
-all_real_results <- rbind(all_real_results, 'Baseline XGBoost' = real_results_baseline_xgb)
+all_real_results <-
+  rbind(all_real_results, 'Baseline XGBoost' = real_results_baseline_xgb)
 
 print(paste0('[',
              round(

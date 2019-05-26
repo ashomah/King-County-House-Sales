@@ -2,8 +2,7 @@
 #### THIS SCRIPT ADD NEW FEATURES TO THE DATASETS
 ####
 
-
-# Add House Age ---- 
+# Add House Age ----
 hp_train_A_FE1 <- hp_train_A_all_fact
 hp_train_B_FE1 <- hp_train_B_all_fact
 hp_test_FE1 <- hp_test
@@ -16,9 +15,12 @@ hp_test_FE1$house_age <- 2015 - hp_test$yr_built
 hp_train_A_FE1$age_renovation <- hp_train_A_FE1$house_age
 hp_train_B_FE1$age_renovation <- hp_train_B_FE1$house_age
 hp_test_FE1$age_renovation <- hp_test_FE1$house_age
-hp_train_A_FE1$age_renovation[hp_train_A_FE1$yr_renovated != 0] <- 2015 - hp_train_A_FE1$yr_renovated[hp_train_A_FE1$yr_renovated != 0]
-hp_train_B_FE1$age_renovation[hp_train_B_FE1$yr_renovated != 0] <- 2015 - hp_train_B_FE1$yr_renovated[hp_train_B_FE1$yr_renovated != 0]
-hp_test_FE1$age_renovation[hp_test_FE1$yr_renovated != 0] <- 2015 - hp_test_FE1$yr_renovated[hp_test_FE1$yr_renovated != 0]
+hp_train_A_FE1$age_renovation[hp_train_A_FE1$yr_renovated != 0] <-
+  2015 - hp_train_A_FE1$yr_renovated[hp_train_A_FE1$yr_renovated != 0]
+hp_train_B_FE1$age_renovation[hp_train_B_FE1$yr_renovated != 0] <-
+  2015 - hp_train_B_FE1$yr_renovated[hp_train_B_FE1$yr_renovated != 0]
+hp_test_FE1$age_renovation[hp_test_FE1$yr_renovated != 0] <-
+  2015 - hp_test_FE1$yr_renovated[hp_test_FE1$yr_renovated != 0]
 
 
 # Add Renovated Flag ----
@@ -57,11 +59,3 @@ print(paste0('[',
              ),
              'm]: ',
              'Age and Renovation Generated!'))
-
-
-
-
-
-
-
-

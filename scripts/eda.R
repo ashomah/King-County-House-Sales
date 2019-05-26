@@ -2,7 +2,7 @@
 #### THIS SCRIPT EXPLORES THE DATA AND GENERATE PLOTS
 ####
 
-# Initialize plot counter ----
+# Initialize plot counter----
 plot_counter = 1
 
 # Generate Correlation Matrix ----

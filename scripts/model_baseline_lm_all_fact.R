@@ -51,10 +51,11 @@ results_baseline_lm_all_fact <-
     cbind(
       rbind(defaultSummary(comp_baseline_lm_all_fact)),
       'MAPE' = MAPE(y_pred = hp_pred_baseline_lm_all_fact, y_true = hp_train_B_proc_all_fact$price),
-      'Coefficients' = length(
-        hp_fit_baseline_lm_all_fact$finalModel$coefficients
+      'Coefficients' = length(hp_fit_baseline_lm_all_fact$finalModel$coefficients),
+      'Train Time (min)' = round(
+        as.numeric(time_fit_duration_baseline_lm_all_fact, units = 'mins'),
+        1
       ),
-      'Train Time (min)' = round(as.numeric(time_fit_duration_baseline_lm_all_fact, units = 'mins'), 1),
       'CV | RMSE' = get_best_result(hp_fit_baseline_lm_all_fact)[, 'RMSE'],
       'CV | Rsquared' = get_best_result(hp_fit_baseline_lm_all_fact)[, 'Rsquared'],
       'CV | MAE' = get_best_result(hp_fit_baseline_lm_all_fact)[, 'MAE']
@@ -90,8 +91,8 @@ plot_counter = plot_counter + 1
 hp_pred_baseline_lm_all_fact_test <-
   predict(hp_fit_baseline_lm_all_fact, hp_test_proc_all_fact)
 submission_baseline_lm_all_fact <-
-  cbind('id' = hp_test_id,
-        'price' = hp_pred_baseline_lm_all_fact_test * sd(hp_train_A$price) + mean(hp_train_A$price))
+  cbind(#'id' = hp_test_id,
+    'price' = hp_pred_baseline_lm_all_fact_test * sd(hp_train_A$price) + mean(hp_train_A$price))
 write.csv(
   submission_baseline_lm_all_fact,
   'submissions/baseline_lm_all_fact.csv',
@@ -102,21 +103,25 @@ write.csv(
 hp_pred_baseline_lm_all_fact_train_B <-
   predict(hp_fit_baseline_lm_all_fact, hp_train_B_proc_all_fact)
 submission_baseline_lm_all_fact_train_B <-
-  cbind('id' = hp_test_id,
-        'price' = hp_pred_baseline_lm_all_fact_train_B * sd(hp_train_A$price) + mean(hp_train_A$price))
+  cbind(#'id' = hp_test_id,
+    'price' = hp_pred_baseline_lm_all_fact_train_B * sd(hp_train_A$price) + mean(hp_train_A$price))
 
 real_results_baseline_lm_all_fact <-
   as.data.frame(
     cbind(
-      'RMSE' = RMSE(y_pred = submission_baseline_lm_all_fact_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'Rsquared' = R2_Score(y_pred = submission_baseline_lm_all_fact_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'MAE' = MAE(y_pred = submission_baseline_lm_all_fact_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'MAPE' = MAPE(y_pred = submission_baseline_lm_all_fact_train_B[,'price'], y_true = hp_train_B[,'price']),
+      'RMSE' = RMSE(y_pred = submission_baseline_lm_all_fact_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'Rsquared' = R2_Score(y_pred = submission_baseline_lm_all_fact_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'MAE' = MAE(y_pred = submission_baseline_lm_all_fact_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'MAPE' = MAPE(y_pred = submission_baseline_lm_all_fact_train_B[, 'price'], y_true = hp_train_B[, 'price']),
       'Coefficients' = length(hp_fit_baseline_lm_all_fact$finalModel$coefficients),
-      'Train Time (min)' = round(as.numeric(time_fit_duration_baseline_lm_all_fact, units = 'mins'), 1)
+      'Train Time (min)' = round(
+        as.numeric(time_fit_duration_baseline_lm_all_fact, units = 'mins'),
+        1
+      )
     )
   )
-all_real_results <- rbind(all_real_results, 'Baseline Lin. Reg. All Fact' = real_results_baseline_lm_all_fact)
+all_real_results <-
+  rbind(all_real_results, 'Baseline Lin. Reg. All Fact' = real_results_baseline_lm_all_fact)
 
 print(paste0(
   '[',

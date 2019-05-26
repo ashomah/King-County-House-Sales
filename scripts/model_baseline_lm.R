@@ -77,8 +77,8 @@ plot_counter = plot_counter + 1
 hp_pred_baseline_lm_test <-
   predict(hp_fit_baseline_lm, hp_test_proc)
 submission_baseline_lm <-
-  cbind('id' = hp_test_id,
-        'price' = hp_pred_baseline_lm_test * sd(hp_train_A$price) + mean(hp_train_A$price))
+  cbind(#'id' = hp_test_id,
+    'price' = hp_pred_baseline_lm_test * sd(hp_train_A$price) + mean(hp_train_A$price))
 write.csv(submission_baseline_lm,
           'submissions/baseline_lm.csv',
           row.names = FALSE)
@@ -87,21 +87,22 @@ write.csv(submission_baseline_lm,
 hp_pred_baseline_lm_train_B <-
   predict(hp_fit_baseline_lm, hp_train_B_proc)
 submission_baseline_lm_train_B <-
-  cbind('id' = hp_test_id,
-        'price' = hp_pred_baseline_lm_train_B * sd(hp_train_A$price) + mean(hp_train_A$price))
+  cbind(#'id' = hp_test_id,
+    'price' = hp_pred_baseline_lm_train_B * sd(hp_train_A$price) + mean(hp_train_A$price))
 
 real_results_baseline_lm <-
   as.data.frame(
     cbind(
-      'RMSE' = RMSE(y_pred = submission_baseline_lm_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'Rsquared' = R2_Score(y_pred = submission_baseline_lm_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'MAE' = MAE(y_pred = submission_baseline_lm_train_B[,'price'], y_true = hp_train_B[,'price']),
-      'MAPE' = MAPE(y_pred = submission_baseline_lm_train_B[,'price'], y_true = hp_train_B[,'price']),
+      'RMSE' = RMSE(y_pred = submission_baseline_lm_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'Rsquared' = R2_Score(y_pred = submission_baseline_lm_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'MAE' = MAE(y_pred = submission_baseline_lm_train_B[, 'price'], y_true = hp_train_B[, 'price']),
+      'MAPE' = MAPE(y_pred = submission_baseline_lm_train_B[, 'price'], y_true = hp_train_B[, 'price']),
       'Coefficients' = length(hp_fit_baseline_lm$finalModel$coefficients),
       'Train Time (min)' = round(as.numeric(time_fit_duration_baseline_lm, units = 'mins'), 1)
     )
   )
-all_real_results <- rbind('Baseline Lin. Reg.' = real_results_baseline_lm)
+all_real_results <-
+  rbind('Baseline Lin. Reg.' = real_results_baseline_lm)
 
 
 print(paste0(
@@ -110,6 +111,3 @@ print(paste0(
   'm]: ',
   'Baseline with Linear Regression is done!'
 ))
-
-
-

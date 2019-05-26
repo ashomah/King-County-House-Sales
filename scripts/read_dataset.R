@@ -36,7 +36,7 @@ na_count <-
     )))))
 na_count <- data.frame(na_count)
 na_count$perc <- round(na_count$na_count / nrow(hp_train) * 100, 2)
-print(paste0(nrow(na_count[na_count$na_count != 0, ]), ' columns of the Train Set have NAs.'))
+print(paste0(nrow(na_count[na_count$na_count != 0,]), ' columns of the Train Set have NAs.'))
 
 na_count <-
   sapply(hp_test, function(y)
@@ -45,7 +45,7 @@ na_count <-
     )))))
 na_count <- data.frame(na_count)
 na_count$perc <- round(na_count$na_count / nrow(hp_test) * 100, 2)
-print(paste0(nrow(na_count[na_count$na_count != 0, ]), ' columns of the Test Set have NAs.'))
+print(paste0(nrow(na_count[na_count$na_count != 0,]), ' columns of the Test Set have NAs.'))
 
 
 # Check if house IDs are relevant ----
@@ -78,7 +78,7 @@ print(
 )
 
 
-# Drop id and date columnes ----
+# Drop id and date columns ----
 hp_train_id <- hp_train$id
 hp_test_id <- hp_test$id
 hp_train$id <- NULL
