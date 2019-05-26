@@ -96,6 +96,9 @@ source('scripts/model_xgb_clusters_all_fact.R')
 # Feature Selection Lasso ----
 source('scripts/featsel_lasso.R')
 
+# Feature Selection RFE ----
+calculate <- FALSE
+source('scripts/featsel_rfe.R')
 
 # Save RData for RMarkdown ----
 save(
@@ -123,7 +126,13 @@ save(
     'hp_fit_baseline_xgb_log_all_fact',
     'hp_fit_baseline_ranger_log',
     'hp_fit_xgb_FE',
-    'hp_fit_baseline_ranger_log_all_fact'
+    'hp_fit_baseline_ranger_log_all_fact',
+    'results_rfe',
+    'varImp_rfe',
+    'var_sel_rfe',
+    'hp_train_A_rfe',
+    'hp_train_B_rfe',
+    'hp_test_rfe',
   ),
   file = 'data_output/RMarkdown_Objects.RData'
 )
