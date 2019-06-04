@@ -126,7 +126,7 @@ These packages are installed and loaded if necessary by the main script.
 
 ***
  
-## Data Preparation  
+## Data Loading  
 
 The dataset is pretty clean, with no missing value in both Train and Test sets. A quick look at the `id` values also shows that only a few houses have been sold more than once on the period, so it doesn't seem relevant the consider the `id` and the `date` for this analysis. We will thus **focus on the house features** to predict its price.  
 
